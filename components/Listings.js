@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import Listing from "./Listing";
+import ListingsGrid from "./ListingsGrid";
 
 const formatResults = (length = 0, keyword = "", location = "") => {
     if (length === 1) return <>
@@ -34,6 +34,7 @@ const Listings = ({dataEndpoint, keyword, location}) => {
                 const data = await response.json();
 
                 setCars(data);
+                // setCars([]);
                 setLoading(false);
             } catch (e) {
                 setError(e.message)
@@ -43,19 +44,15 @@ const Listings = ({dataEndpoint, keyword, location}) => {
 
     }, [dataEndpoint])
 
-    if (loading) return <div>...Loading</div>;
-
     if (!!!error) return <div>Error occurred please try again</div>;
 
     return (
         <section>
             <header className="listings__header">
                 <h1 className="listings__header_title">Search Results</h1>
-                <h2 className="listings__header_subtitle">{formatResults(cars.length, keyword, location)}</h2>
+                {loading ? <div className="listings__header_subtitle-loading"/> : <h2 className="listings__header_subtitle">{formatResults(cars.length, keyword, location)}</h2>}
             </header>
-            <div className="listings__grid">
-                {cars.map((car, i) => <Listing key={i} car={car} />)}
-            </div>
+            <ListingsGrid cars={cars} loading={loading} />
         </section>
     );
 };

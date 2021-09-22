@@ -33,7 +33,7 @@ const Listing = ({car = {}}) => {
             <span className="listing__header_location">{state.location}</span>
         </header>
 
-        {state.imgUrl && <img src={state.imgUrl} alt={state.title} className="listing__img" />}
+        {!!state.imgUrl && <img src={state.imgUrl} alt={state.title} className="listing__img" />}
 
         <p className="listing__description">
             {state.description}

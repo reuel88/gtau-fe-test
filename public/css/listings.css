@@ -17,9 +17,25 @@
     margin: 0;
 }
 
+.listings__header_subtitle-loading {
+    min-height: calc(var(--font-size-medium) * 1.25);
+    background-color: #DDDBDD;
+    display: inline-block;
+    width: 25%;
+    position: relative;
+    overflow: hidden;
+}
+
 .listings__header_subtitle__emphasis {
     color: var(--color-primary);
     font-weight: normal;
+}
+
+.listings__no_results_found {
+    color: var(--color-text);
+    font-size: var(--font-size-x-large);
+    display: flex;
+    justify-content: center
 }
 
 .listings__grid {
@@ -36,6 +52,34 @@
 .listing > *:last-child {
     margin-bottom: 0;
 }
+
+.listing-skeleton {
+    min-height: calc(var(--spacing-x4) * 12);
+    background-color: #DDDBDD;
+    display: inline-block;
+    max-width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.listings__header_subtitle-loading::after, .listing-skeleton::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 0,
+            rgba(255, 255, 255, 0.2) 20%,
+            rgba(255, 255, 255, 0.5) 60%,
+            rgba(255, 255, 255, 0)
+    );
+    animation: shimmer 2s infinite;
+    content: '';
+}
+
 
 .listing__header {
     display: grid;
@@ -101,10 +145,16 @@
 }
 
 @media (min-width: 800px) {
+
     /* tablet */
     .listing {
-        --width-padding: calc((100% - var(--spacing-x4)) - var(--spacing-x2));
-        max-width: calc((var(--width-padding) - (var(--grid-gap) * 2)) / 2);
+        --width-padding: calc(100% - var(--spacing-x4));
+        max-width: calc((var(--width-padding) - var(--grid-gap)) / 2);
+    }
+
+    .listing-skeleton {
+        --width-padding: calc(100% - var(--spacing-x4));
+        width: calc((var(--width-padding) - var(--grid-gap)) / 2);
     }
 
     .listing__img {
@@ -116,6 +166,19 @@
     /* desktop */
     .listing {
         --width-padding: calc(1200px - (var(--spacing-x2) * 2));
-        max-width: calc((var(--width-padding) - (var(--grid-gap) * 3)) / 3);
+        --gaps: calc(var(--grid-gap) * 2);
+        max-width: calc((var(--width-padding) - var(--gaps)) / 3);
+    }
+
+    .listing-skeleton {
+        --width-padding: calc(1200px - (var(--spacing-x2) * 2));
+        --gaps: calc(var(--grid-gap) * 2);
+        width: calc((var(--width-padding) - var(--gaps)) / 3);
+    }
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
     }
 }
